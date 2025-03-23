@@ -3,9 +3,10 @@ const levels = {
     '포지션': '보컬 기타 베이스 드럼 키보드'.split(' '),
     '술집': '훌랄라 투다리 럭스 구노 꼬꾸마시 두발네발 생생맥주 인건맥 작교 크라운호프 을지로가맥 사막의하얀꽃'.split(' ')
 }
+const subjects = Object.keys(levels)
 
 function start(levIndex) {
-    const subject = Object.keys(levels)[levIndex]
+    const subject = subjects[levIndex]
     const word = levels[subject][Math.floor(Math.random() * levels[subject].length)]
     const allPeople = new Array(people).fill().map((_, i) => i)
     allPeople.sort(() => Math.random() - 0.5)
@@ -39,9 +40,15 @@ function start(levIndex) {
         box.onclick = () => prepare(i+1)
     }
     function end() {
-        sub.textContent = '라이어 게임'
-        main.textContent = `주제: ${Object.keys(levels)[levIndex + 1]}`
-        disc.textContent = '눌러서 시작하기'
-        box.onclick = () => start(levIndex + 1)
+        if (levIndex + 1 >= subjects.length) {
+            sub.textContent = '라이어 게임'
+            main.textContent = '끝'
+            disc.textContent = '수고하셨습니당'
+        } else {
+            sub.textContent = '라이어 게임'
+            main.textContent = `주제: ${subjects[levIndex + 1]}`
+            disc.textContent = '눌러서 시작하기'
+            box.onclick = () => start(levIndex + 1)
+        }
     }
 }
